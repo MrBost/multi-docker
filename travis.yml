@@ -15,6 +15,7 @@ after_success:
     - docker buikd -t mrbost/multi-worker ./worker
     # Login to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
     # Take those images and push them to docker hub
     - docker push mrbost/mutli-client
     - docker push mrbost/multi-nginx
