@@ -13,7 +13,6 @@ after_success:
     - docker buikd -t mrbost/multi-nginx ./nginx
     - docker buikd -t mrbost/multi-server ./server
     - docker buikd -t mrbost/multi-worker ./worker
-    
     # Login to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
