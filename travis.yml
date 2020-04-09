@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker 
+
+before_install:
+    - docker build -t mrbost/react-test -f ./client/Dockerfile.dev
+
+script:
+    - docker run mrbost/react-test npm test -- --coverage
+
+after_success:
+    - docker build -t mrbost/multi-client ./client
+    - docker buikd -t mrbost/multi-nginx ./nginx
+    - docker buikd -t mrbost/multi-server ./server
+    - docker buikd -t mrbost/multi-worker ./worker
+    # Login to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Take those images and push them to docker hub
+    - docker push mrbost/mutli-client
+    - docker push mrbost/multi-nginx
+    - docker push mrbost/multi-server
+    - docker push mrbost/multi-worker
